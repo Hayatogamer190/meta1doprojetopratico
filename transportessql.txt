@@ -1,0 +1,186 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3306
+-- Generation Time: Apr 05, 2025 at 09:32 PM
+-- Server version: 9.1.0
+-- PHP Version: 8.3.14
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `transportes`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carga`
+--
+
+DROP TABLE IF EXISTS `carga`;
+CREATE TABLE IF NOT EXISTS `carga` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `veiculo` int DEFAULT NULL,
+  `tipo_de_carga` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `peso` decimal(10,2) NOT NULL,
+  `local_origem` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `local_destino` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `data_carga` date NOT NULL,
+  `frequencia` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ID_Veiculo` (`veiculo`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `carga`
+--
+
+INSERT INTO `carga` (`id`, `veiculo`, `tipo_de_carga`, `peso`, `local_origem`, `local_destino`, `data_carga`, `frequencia`) VALUES
+(1, 3, 'sdawd', 15.00, 'awdawd', 'awdawd', '2024-12-18', 'Semestral');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `condutor`
+--
+
+DROP TABLE IF EXISTS `condutor`;
+CREATE TABLE IF NOT EXISTS `condutor` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `carta_de_conducao` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `contacto` int NOT NULL,
+  `veiculo_atual` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Numero_Identificacao` (`carta_de_conducao`),
+  KEY `Veiculo_Atual` (`veiculo_atual`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `condutor`
+--
+
+INSERT INTO `condutor` (`id`, `nome`, `carta_de_conducao`, `contacto`, `veiculo_atual`) VALUES
+(2, 'asdasd', '6a4s6dasd', 4649845, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `manutencao`
+--
+
+DROP TABLE IF EXISTS `manutencao`;
+CREATE TABLE IF NOT EXISTS `manutencao` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `veiculo` int DEFAULT NULL,
+  `tipo_de_manutencao` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `custo` decimal(10,2) NOT NULL,
+  `data_manutencao` date NOT NULL,
+  `proxima_manutencao` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ID_Veiculo` (`veiculo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `manutencao`
+--
+
+INSERT INTO `manutencao` (`id`, `veiculo`, `tipo_de_manutencao`, `custo`, `data_manutencao`, `proxima_manutencao`) VALUES
+(1, 3, 'Óleo', 18.00, '2024-12-10', '2025-08-06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pagamento`
+--
+
+DROP TABLE IF EXISTS `pagamento`;
+CREATE TABLE IF NOT EXISTS `pagamento` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `veiculo` int DEFAULT NULL,
+  `tipo_de_pagamento` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `valor` decimal(10,2) NOT NULL,
+  `data_vencimento` date NOT NULL,
+  `estado` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ID_Veiculo` (`veiculo`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pagamento`
+--
+
+INSERT INTO `pagamento` (`id`, `veiculo`, `tipo_de_pagamento`, `valor`, `data_vencimento`, `estado`) VALUES
+(1, 2, 'Seguro automóvel', 190.00, '2025-12-17', 'Nao Pago');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `veiculo`
+--
+
+DROP TABLE IF EXISTS `veiculo`;
+CREATE TABLE IF NOT EXISTS `veiculo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `marca` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `modelo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ano` int NOT NULL,
+  `matricula` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `localidade` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `estado` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ultima_manutencao` date NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Placa` (`matricula`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `veiculo`
+--
+
+INSERT INTO `veiculo` (`id`, `tipo`, `marca`, `modelo`, `ano`, `matricula`, `localidade`, `estado`, `ultima_manutencao`) VALUES
+(2, 'Veículo Ligeiro', 'Opel', 'Corsa', 1993, 'MH-15-56', 'Penela', 'Operacional', '2024-12-10'),
+(3, 'Veículo Ligeiro', 'Mercedes', 'A200', 2010, 'AM-15-AS', 'Lisboa', 'Operacional', '2024-12-10');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `carga`
+--
+ALTER TABLE `carga`
+  ADD CONSTRAINT `carga_ibfk_1` FOREIGN KEY (`veiculo`) REFERENCES `veiculo` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `condutor`
+--
+ALTER TABLE `condutor`
+  ADD CONSTRAINT `condutor_ibfk_1` FOREIGN KEY (`veiculo_atual`) REFERENCES `veiculo` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `manutencao`
+--
+ALTER TABLE `manutencao`
+  ADD CONSTRAINT `manutencao_ibfk_1` FOREIGN KEY (`veiculo`) REFERENCES `veiculo` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pagamento`
+--
+ALTER TABLE `pagamento`
+  ADD CONSTRAINT `pagamento_ibfk_1` FOREIGN KEY (`veiculo`) REFERENCES `veiculo` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
