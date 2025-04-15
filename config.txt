@@ -1,0 +1,4 @@
+module.exports = {
+    secret: "meliodas17#",
+    timer: 1800000, //30 minutos
+}
